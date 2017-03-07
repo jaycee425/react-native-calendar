@@ -173,7 +173,7 @@ export default class Calendar extends Component {
       let sundayMoment = moment(currMoment).startOf('week');
       if (weekStart > 0) {
         res = moment(currMoment).isoWeekday(weekStart);
-        if (r.diff(currMoment) > 0) {
+        if (res.diff(currMoment) > 0) {
           res = moment(currMoment).subtract(7, 'day').isoWeekday(weekStart);
         }
       } else {
@@ -282,7 +282,7 @@ export default class Calendar extends Component {
             </Text>
           </TouchableOpacity>
           <Text style={[styles.title, this.props.customStyle.title]}>
-            {this.state.currentMonthMoment.format(this.props.titleFormat)}
+            {this.state.currentMoment.format(this.props.titleFormat)}
           </Text>
           <TouchableOpacity
              style={[styles.controlButton, this.props.customStyle.controlButton]}
