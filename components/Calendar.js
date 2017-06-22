@@ -36,6 +36,7 @@ export default class Calendar extends Component {
     onSwipePrev: PropTypes.func,
     onTouchNext: PropTypes.func,
     onTouchPrev: PropTypes.func,
+    onTitlePress: PropTypes.func,
     prevButtonText: PropTypes.oneOfType([
       PropTypes.string,
       PropTypes.object
@@ -281,9 +282,11 @@ export default class Calendar extends Component {
               {this.props.prevButtonText}
             </Text>
           </TouchableOpacity>
-          <Text style={[styles.title, this.props.customStyle.title]}>
-            {this.state.currentMoment.format(this.props.titleFormat)}
-          </Text>
+          <TouchableOpacity style={styles.title} onPress={() => this.props.onTitlePress && this.props.onTitlePress()}>
+            <Text style={[styles.titleText, this.props.customStyle.title]}>
+              {localizedMonth} {this.state.currentMoment.year()}
+            </Text>
+          </TouchableOpacity>
           <TouchableOpacity
              style={[styles.controlButton, this.props.customStyle.controlButton]}
              onPress={this.onNext}
