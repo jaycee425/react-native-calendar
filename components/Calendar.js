@@ -49,7 +49,7 @@ export default class Calendar extends Component {
     titleFormat: PropTypes.string,
     today: PropTypes.any,
     weekStart: PropTypes.number,
-    calendarFormat: PropTypes.string
+    calendarFormat: PropTypes.oneOf(['monthly', 'weekly']),
   };
 
   static defaultProps = {
