@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import {
+  Animated,
   Text,
   TouchableOpacity,
   TouchableWithoutFeedback,
@@ -74,6 +75,7 @@ export default class Day extends Component {
       isSelected,
       isToday,
       showEventIndicators,
+      animationStyle
     } = this.props;
 
     return filler
@@ -86,7 +88,7 @@ export default class Day extends Component {
       )
     : (
       <TouchableOpacity onPress={this.props.onPress}>
-        <View style={[styles.dayButton, customStyle.dayButton]}>
+        <Animated.View style={[styles.dayButton, customStyle.dayButton, animationStyle]}>
           <View style={this.dayCircleStyle(isWeekend, isSelected, isToday, event)}>
             <Text style={this.dayTextStyle(isWeekend, isSelected, isToday, event)}>{caption}</Text>
           </View>
@@ -99,7 +101,7 @@ export default class Day extends Component {
               event && event.eventIndicator]}
             />
           }
-        </View>
+        </Animated.View>
       </TouchableOpacity>
     );
   }
