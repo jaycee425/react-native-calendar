@@ -370,19 +370,19 @@ export default class Calendar extends Component {
         {this.renderTopBar()}
         {this.renderHeading(this.props.titleFormat)}
         {this.props.scrollEnabled ?
-          <ScrollView
-            ref={calendar => this._calendar = calendar}
-            horizontal
-            scrollEnabled
-            pagingEnabled
-            removeClippedSubviews
-            scrollEventThrottle={1000}
-            showsHorizontalScrollIndicator={false}
-            automaticallyAdjustContentInsets={false}
-            onMomentumScrollEnd={event => this.scrollEnded(event)}
-          >
-            {calendarDates.map(date => this.renderCalendarView(this.state.calendarFormat, moment(date), eventDatesMap))}
-          </ScrollView>
+           <ScrollView
+               ref={calendar => this._calendar = calendar}
+              horizontal
+              scrollEnabled
+              pagingEnabled
+              removeClippedSubviews
+              scrollEventThrottle={1000}
+              showsHorizontalScrollIndicator={false}
+              automaticallyAdjustContentInsets={false}
+              onMomentumScrollEnd={(event) => this.scrollEnded(event)}
+              >
+              {calendarDates.map((date) => this.renderCalendarView(this.props.calendarFormat, moment(date), eventDatesMap))}
+           </ScrollView>
          :
           <View ref={calendar => this._calendar = calendar}>
             {calendarDates.map(date => this.renderCalendarView(this.state.calendarFormat, moment(date), eventDatesMap))}
