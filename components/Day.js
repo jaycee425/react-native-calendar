@@ -61,13 +61,13 @@ export default class Day extends Component {
     }
 
     if (event) {
-      dayTextStyle.push(styles.hasEventText, customStyle.hasEventText, event.hasEventText)
+      dayTextStyle.push(styles.hasEventText, customStyle.hasEventText, event.hasEventText);
     }
     return dayTextStyle;
   }
 
   render() {
-    let { caption, customStyle } = this.props;
+    const { caption, customStyle } = this.props;
     const {
       filler,
       event,
@@ -75,30 +75,31 @@ export default class Day extends Component {
       isSelected,
       isToday,
       showEventIndicators,
-      animationStyle
+      animationStyle,
     } = this.props;
 
     return filler
     ? (
-        <TouchableWithoutFeedback>
-          <View style={[styles.dayButtonFiller, customStyle.dayButtonFiller]}>
-            <Text style={[styles.day, customStyle.day]} />
-          </View>
-        </TouchableWithoutFeedback>
+      <TouchableWithoutFeedback>
+        <View style={[styles.dayButtonFiller, customStyle.dayButtonFiller]}>
+          <Text style={[styles.day, customStyle.day]} />
+        </View>
+      </TouchableWithoutFeedback>
       )
     : (
       <TouchableOpacity onPress={this.props.onPress}>
-        <Animated.View style={[styles.dayButton, customStyle.dayButton, animationStyle]}>
-          <View style={this.dayCircleStyle(isWeekend, isSelected, isToday, event)}>
+        <Animated.View style={[styles.dayButton, customStyle.dayButton]}>
+          <View style={[this.dayCircleStyle(isWeekend, isSelected, isToday, event)]}>
             <Text style={this.dayTextStyle(isWeekend, isSelected, isToday, event)}>{caption}</Text>
           </View>
           {showEventIndicators &&
-            <View style={[
-              styles.eventIndicatorFiller,
-              customStyle.eventIndicatorFiller,
-              event && styles.eventIndicator,
-              event && customStyle.eventIndicator,
-              event && event.eventIndicator]}
+            <View
+              style={[
+                styles.eventIndicatorFiller,
+                customStyle.eventIndicatorFiller,
+                event && styles.eventIndicator,
+                event && customStyle.eventIndicator,
+                event && event.eventIndicator]}
             />
           }
         </Animated.View>
