@@ -317,7 +317,7 @@ export default class Calendar extends Component {
             </Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.title} onPress={() => this.props.onTitlePress && this.props.onTitlePress()}>
-            <Text style={[styles.titleText, this.props.customStyle.title,{top: Platform.OS === 'android'  -5: 0}]}>
+            <Text style={[styles.titleText, this.props.customStyle.title,{top: Platform.OS === 'android' ? -5: 0}]}>
               {localizedMonth} {this.state.currentMoment.year()}
             </Text>
           </TouchableOpacity>
