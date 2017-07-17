@@ -5,6 +5,7 @@ import {
   ScrollView,
   Text,
   TouchableOpacity,
+  Platform,
   View,
 } from 'react-native';
 
@@ -23,7 +24,6 @@ export default class Calendar extends Component {
     selectedMoment: moment(this.props.selectedDate),
     calendarFormat: this.props.calendarFormat,
     animateCalendar: new Animated.Value(120),
-    animateDay: new Animated.Value(47),
   };
 
   static propTypes = {
@@ -88,51 +88,31 @@ export default class Calendar extends Component {
     if (props.selectedDate) {
       this.setState({ selectedMoment: props.selectedDate });
     }
-    console.log('this,props', this.props);
-    console.log('nexptops', props);
+
     if (this.props.calendarFormat !== props.calendarFormat && props.calendarFormat === 'monthly') {
       this.setState({
         calendarFormat: props.calendarFormat,
       });
-      Animated.parallel([
-        Animated.timing(
+      Animated.timing(
         this.state.animateCalendar,
-          {
-            toValue: 350,
-            duration: 1000,
-          },
-      ),
-        Animated.timing(
-        this.state.animateDay,
-          {
-            toValue: 47,
-            duration: 1000,
-          },
-      ),
-      ]).start();
+        {
+          toValue: 350,
+          duration: 1200,
+        },
+      ).start();
     }
-    console.log(this.props !== props);
+
     if (this.props.calendarFormat !== props.calendarFormat && props.calendarFormat === 'weekly') {
-      Animated.parallel([
-        Animated.timing(
+      Animated.timing(
         this.state.animateCalendar,
-          {
-            toValue: 120,
-            duration: 1000,
-          },
-      ),
-        Animated.timing(
-        this.state.animateDay,
-          {
-            toValue: 0,
-            duration: 700,
-          },
-      ),
-      ]).start((hasFinished) => {
+        {
+          toValue: 120,
+          duration: 1200,
+        },
+      ).start((hasFinished) => {
         this.setState({
           calendarFormat: props.calendarFormat,
         });
-        this.state.animateDay.setValue(47);
       });
     }
   }
@@ -276,7 +256,6 @@ export default class Calendar extends Component {
                    eventsMap[thisMoment.format('YYYYMMDD')]}
             showEventIndicators={this.props.showEventIndicators}
             customStyle={this.props.customStyle}
-            animationStyle={{ height: this.state.animateDay }}
           />
         ));
       } else {
@@ -338,7 +317,7 @@ export default class Calendar extends Component {
             </Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.title} onPress={() => this.props.onTitlePress && this.props.onTitlePress()}>
-            <Text style={[styles.titleText, this.props.customStyle.title]}>
+            <Text style={[styles.titleText, this.props.customStyle.title,{top: Platform.OS === 'android'  -5: 0}]}>
               {localizedMonth} {this.state.currentMoment.year()}
             </Text>
           </TouchableOpacity>
@@ -370,19 +349,19 @@ export default class Calendar extends Component {
         {this.renderTopBar()}
         {this.renderHeading(this.props.titleFormat)}
         {this.props.scrollEnabled ?
-           <ScrollView
-               ref={calendar => this._calendar = calendar}
-              horizontal
-              scrollEnabled
-              pagingEnabled
-              removeClippedSubviews
-              scrollEventThrottle={1000}
-              showsHorizontalScrollIndicator={false}
-              automaticallyAdjustContentInsets={false}
-              onMomentumScrollEnd={(event) => this.scrollEnded(event)}
-              >
-              {calendarDates.map((date) => this.renderCalendarView(this.props.calendarFormat, moment(date), eventDatesMap))}
-           </ScrollView>
+          <ScrollView
+            ref={calendar => this._calendar = calendar}
+            horizontal
+            scrollEnabled
+            pagingEnabled
+            removeClippedSubviews
+            scrollEventThrottle={1000}
+            showsHorizontalScrollIndicator={false}
+            automaticallyAdjustContentInsets={false}
+            onMomentumScrollEnd={event => this.scrollEnded(event)}
+          >
+            {calendarDates.map(date => this.renderCalendarView(this.props.calendarFormat, moment(date), eventDatesMap))}
+          </ScrollView>
          :
           <View ref={calendar => this._calendar = calendar}>
             {calendarDates.map(date => this.renderCalendarView(this.state.calendarFormat, moment(date), eventDatesMap))}
