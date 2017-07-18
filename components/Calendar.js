@@ -185,13 +185,13 @@ export default class Calendar extends Component {
             moment(this.state.currentMoment).add(currentPage - VIEW_INDEX, 'month') :
             moment(this.state.currentMoment).add(currentPage - VIEW_INDEX, 'week');
 
-    this.setState({ currentMoment: newMoment });
-
-    if (currentPage < VIEW_INDEX) {
-      this.props.onSwipePrev && this.props.onSwipePrev(newMoment);
-    } else if (currentPage > VIEW_INDEX) {
-      this.props.onSwipeNext && this.props.onSwipeNext(newMoment);
-    }
+      this.setState({ currentMoment: newMoment }, () => {
+      if (currentPage < VIEW_INDEX) {
+        this.props.onSwipePrev && this.props.onSwipePrev(newMoment);
+      } else if (currentPage > VIEW_INDEX) {
+        this.props.onSwipeNext && this.props.onSwipeNext(newMoment);
+      }
+    });
   }
 
   getStartMoment(calFormat, currMoment) {
@@ -358,7 +358,7 @@ export default class Calendar extends Component {
             scrollEventThrottle={1000}
             showsHorizontalScrollIndicator={false}
             automaticallyAdjustContentInsets={false}
-            onMomentumScrollEnd={this.props.calendarFormat === 'monthly' ? event => this.scrollEnded(event) : null}
+            onMomentumScrollEnd={event => this.scrollEnded(event)}
           >
             {calendarDates.map(date => this.renderCalendarView(this.props.calendarFormat, moment(date), eventDatesMap))}
           </ScrollView>
