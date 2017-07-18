@@ -358,7 +358,7 @@ export default class Calendar extends Component {
             scrollEventThrottle={1000}
             showsHorizontalScrollIndicator={false}
             automaticallyAdjustContentInsets={false}
-            onMomentumScrollEnd={event => this.scrollEnded(event)}
+            onMomentumScrollEnd={this.props.calendarFormat === 'monthly' ? event => this.scrollEnded(event) : null}
           >
             {calendarDates.map(date => this.renderCalendarView(this.props.calendarFormat, moment(date), eventDatesMap))}
           </ScrollView>
