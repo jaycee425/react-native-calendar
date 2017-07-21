@@ -186,10 +186,14 @@ export default class Calendar extends Component {
             moment(this.state.currentMoment).add(currentPage - VIEW_INDEX, 'week');
 
       this.setState({ currentMoment: newMoment }, () => {
+        const calendarDates = this.getStack(newMoment);
+        const dates = calendarDates.map(date => this.getStartMoment(this.props.calendarFormat, newMoment))
+        console.log(dates)
+        const firstDay = dates.slice(-1)[0]
       if (currentPage < VIEW_INDEX) {
-        this.props.onSwipePrev && this.props.onSwipePrev(newMoment);
+        this.props.onSwipePrev && this.props.onSwipePrev(firstDay);
       } else if (currentPage > VIEW_INDEX) {
-        this.props.onSwipeNext && this.props.onSwipeNext(newMoment);
+        this.props.onSwipeNext && this.props.onSwipeNext(firstDay);
       }
     });
   }
